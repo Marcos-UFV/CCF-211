@@ -4,21 +4,22 @@ typedef struct Node{
     int data;
     struct Node* next;
 }Node;
-Node* head;
-void Insert(int data){
+Node* top = NULL;
+void Push(int data){
     Node* temp = (Node*)malloc(sizeof(Node));
     temp->data = data;
-    temp->next = head;
-    head = temp;
+    temp->next = top;
+    top = temp;
 }
-void Remove(){
-    Node* temp = head;
-    head = temp->next;
+void Pop(){
+    Node* temp = top;
+    if(temp == NULL) return;
+    top = temp->next;
     free(temp);
 }
 void Print(){
     printf("List: ");
-    Node* temp = head;
+    Node* temp = top;
     while (temp != NULL){
         printf("%d ",temp->data);
         temp = temp->next;
@@ -26,12 +27,11 @@ void Print(){
     printf("\n");    
 }
 int main(){
-    head = NULL;
-    Insert(1);
-    Insert(2);
-    Insert(3);
-    Insert(4);
+    Push(1);
+    Push(2);
+    Push(3);
+    Push(4);
     Print();
-    Remove();
+    Pop();
     Print();
 }
