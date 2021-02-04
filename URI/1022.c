@@ -5,6 +5,33 @@ typedef struct E{
     int num;
     int den;
 }E;
+int IsNumericDigit(char);
+int IsOperator(char);
+void Operations(E* e);
+void AssignValues(char*,int,E*);
+void FormatData(E*);
+int mdc(int,int);
+int main(){
+    int N;
+    while (1)
+    {
+        scanf("%d",&N);
+        if(N <= 0) break;
+        for(int i = 0;i < N;i++){
+            int length = -1;
+            E e;
+            char exp[1000];
+            scanf(" %[^\n]",exp);
+            
+            while(exp[++length] != '\0');
+
+            AssignValues(exp,length,&e);
+            Operations(&e);
+
+            FormatData(&e);
+        }       
+    }    
+}
 int IsNumericDigit(char c){
     return (c >= '0' && c <= '9');
 }
@@ -52,36 +79,18 @@ void AssignValues(char* exp,int N,E* e ){
     e->N2 = values[2];
     e->D2 = values[3];
 }
+int mdc(int a,int b){
+    if(b == 0)
+        return a;
+    else
+        return mdc(b,a%b);
+}
 void FormatData(E* e){
-    int num,den,maior;
+    int num,den,div;
     num = e->num;
     den = e->den;
-    maior = num > den?num:den;
-    int i = 2;
-    for(i = 2; i < maior;i++){
-        if(num % i == 0 && den % i == 0){
-            num = num/i;
-            den = den/i;
-        }            
-    }
+    div = mdc(num,den);
+    num = num/div;
+    den = den/div;
     printf("%d/%d = %d/%d\n",e->num,e->den,num,den);
-}
-int main(){
-    int N;
-    while (scanf("%d",&N))
-    {
-        for(int i = 0;i < N;i++){
-            int length = -1;
-            E e;
-            char exp[1000];
-            scanf(" %[^\n]",exp);
-            
-            while(exp[++length] != '\0');
-
-            AssignValues(exp,length,&e);
-            Operations(&e);
-
-            FormatData(&e);
-        }       
-    }    
 }
