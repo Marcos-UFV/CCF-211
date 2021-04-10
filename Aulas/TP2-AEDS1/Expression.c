@@ -1,7 +1,7 @@
 #include "Expression.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+Table T;
 void AsksForNUmberOfClausesAndVariables(Expression *E){
     int c,n;
     printf("Entre com o Número de Cláusulas e Variáveis:");
@@ -35,7 +35,11 @@ void AsksForTheFormatOfTheClauses(Expression *E){
         printf("\nC%d = ",(i+1));
         scanf(" %[^\n]",c);
         FillsClauses(E,c,i);
-    }    
+    }
+    //Cria a tabela verdade de acordo com o número de variáveis
+    CreateTable(&T,E->N);
+    FillsTable(&T);
+    PrintTable(&T);    
 }
 void FillsClauses(Expression *E,char *C,int L){
     int i = 0;
@@ -80,7 +84,11 @@ void AsksForNumberOfVariables(Expression *E){
     E->N = n;
     CreateMatrix(E);
     FillsMatrix(E);
+    //Cria a tabela verdade de acordo com o número de variáveis
+    CreateTable(&T,n);
+    FillsTable(&T);
 }
+//TEM UM BUG AQUI. Está fazendo a iteração mais interna mais de 3 vezes.
 void FillsMatrix(Expression *E){
     int i,j,p,v;
     for (i = 0; i < E->C; i++)
@@ -91,5 +99,35 @@ void FillsMatrix(Expression *E){
           v = (rand() % 2) +1;  
           E->matriz[i][p] = v;   
         }        
+    }    
+}
+void EvalueteExpression(Expression *E){
+    int i,j,k,l,flag;
+    int* Exp = (int *)malloc(E->C*sizeof(int));
+    printf("A Expressão é verdadeira para a(s) seguinte(s) combinação(ões):\n");
+    for (i = 0; i < T.L; i++)
+    {
+        for (j = 0; j < E->C; j++)
+        {
+            Exp[j] = 0;
+            for (k = 0; k < E->N; k++)
+            {
+                if(E->matriz[j][k]){
+                    if(T.matriz[i][k] == E->matriz[j][k]){
+                        Exp[j] = 1;
+                        break;
+                    }
+                }
+            }
+            
+        }
+        flag = 1;
+        for (l = 0; l < E->C; l++)
+        {
+            if(!Exp[l])
+                flag = 0;
+        }
+        if(flag)
+            PrintTableLine(&T,i);         
     }    
 }

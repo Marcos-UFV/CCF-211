@@ -23,7 +23,6 @@ void FillsTable(Table *T){
     mod = lenght/2;
     for (i = 0; i < T->C; i++)
     {       
-        printf("Mod = %d\n",mod);
         for (j = 0; j < T->L; j++)
         {
             if(j % mod == 0)
@@ -44,4 +43,11 @@ void PrintTable(Table *T){
         printf("\n");        
     }    
 }
-void EvaluatesExpression(Table *T,Expression *E);
+void PrintTableLine(Table *T,int L){
+    int i;
+    for (i = 0; i < T->C; i++)
+    {
+        printf("%d ",T->matriz[L][i]);
+    }
+    printf("\n");    
+}

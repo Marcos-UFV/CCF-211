@@ -1,10 +1,11 @@
+#include "TruthTable.h"
 typedef struct{
     int C;
     int N;
     int **matriz;
 }Expression;
 int IsNumericDigit(char c);
-
+void EvalueteExpression(Expression *E);
 //Modo Interativo
 void AsksForNUmberOfClausesAndVariables(Expression *E);
 void CreateMatrix(Expression *E);
