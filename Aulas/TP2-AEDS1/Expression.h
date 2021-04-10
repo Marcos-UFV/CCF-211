@@ -13,3 +13,5 @@ void FillsClauses(Expression *E,char *C,int L);
 void printMatriz(Expression *E);
 
 //Modo Automático
+void FillsMatrix(Expression *E);
+void AsksForNumberOfVariables(Expression *E);

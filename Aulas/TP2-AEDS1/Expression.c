@@ -59,6 +59,7 @@ int IsNumericDigit(char c){
     return (c >= '0' && c <= '9');
 }
 void printMatriz(Expression *E){
+    printf("C = %d\nN =%d\n",E->C,E->N);
     int i,j;
     for (int i = 0; i < E->C; i++)
     {
@@ -67,5 +68,28 @@ void printMatriz(Expression *E){
             printf("%d ",E->matriz[i][j]);
         }
         printf("\n");
+    }    
+}
+void AsksForNumberOfVariables(Expression *E){
+    int n,c;
+    printf("Informe o número de variáveis: ");
+    printf("\nN = ");
+    scanf(" %d",&n);
+    c = (2*n)/3;
+    E->C = c;
+    E->N = n;
+    CreateMatrix(E);
+    FillsMatrix(E);
+}
+void FillsMatrix(Expression *E){
+    int i,j,p,v;
+    for (i = 0; i < E->C; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+          p = (rand() % (E->N));
+          v = (rand() % 2) +1;  
+          E->matriz[i][p] = v;   
+        }        
     }    
 }
